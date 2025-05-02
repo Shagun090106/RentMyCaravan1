@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="add-caravan" class="container" style="display: none; background: teal;">
+        <h1>Add Your Caravan</h1>
+        <div class="form-container">
+            <form id="add-caravan-form" onsubmit="return addCaravan()">
+                <input type="text" id="caravan-name" placeholder="Caravan Name" required>
+                <select id="caravan-type" required>
+                    <option value="" disabled selected>Select Caravan Type</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="Compact">Compact</option>
+                    <option value="Classic">Classic</option>
+                </select>
+                <input type="url" id="caravan-image" placeholder="Caravan Image URL" required>
+                <textarea id="caravan-description" placeholder="Caravan Description" rows="4" required></textarea>
+                <button type="submit">Add Caravan</button>
+                <p id="add-caravan-error" class="error"></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
