@@ -1,0 +1,287 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('https://erwin-hymer.builtbybeluga.com/media/pages/buccaneer/home/2963169bba-1725522254/tbp_8039.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #333;
+    padding: 15px 0;
+    text-align: center;
+    z-index: 1000;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: inline-block;
+    transition: background 0.5s ease, color 0.5s ease;
+    border-radius: 10px;
+}
+
+.navbar a:hover {
+    background: #555;
+    color: lightblue;
+}
+
+.container {
+    display: none;
+    margin: 100px auto 20px;
+    padding: 50px;
+    background: darkturquoise;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    width: 50%;
+}
+
+.active {
+    display: block;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+p {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1.5rem;
+    color: white;
+    background: pink;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #218838;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease;
+}
+
+input:focus {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+select {
+    display: block;
+    width: 100%; /* Match the width of text inputs */
+    margin: 15px 0;
+    padding: 12px; /* Match the padding of text inputs */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease;
+}
+
+select:focus {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Match focus style of text inputs */
+    outline: none;
+}
+
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-add-caravan {
+    background: #ff9800; /* Set a distinct orange color */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-add-caravan:hover {
+    background: #e68900; /* Darker shade on hover */
+    transform: scale(1.05);
+}
+
+.form-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-container p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.form-container a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-container a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    p {
+        font-size: 1.2rem;
+    }
+}
+
+.caravan-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.caravan-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Add spacing between elements inside caravan-item */
+}
+
+.caravan-item .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Add spacing between buttons */
+    width: 100%; /* Ensure buttons align properly */
+}
+
+.caravan-item button {
+    flex: 1; /* Make buttons take equal space */
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.caravan-item p {
+    background: rgba(255, 255, 255, 0.8); /* Light background for description */
+    padding: 10px;
+    border-radius: 10px;
+    color: #333; /* Dark text for readability */
+    width: 90%; /* Ensure consistent width */
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .caravan-item {
+        width: 90%;
+    }
+}
+
+.caravan-gallery img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.caravan-gallery p {
+    font-size: 1.2rem;
+}
+
+.home-details h2 {
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+.home-details ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.home-details ul li {
+    margin-bottom: 10px;
+}
+
+.services-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.service-item {
+    width: 30%;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .service-item {
+        width: 90%;
+    }
+}
+
+.services-gallery img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.services-gallery p {
+    font-size: 1.2rem;
+}
