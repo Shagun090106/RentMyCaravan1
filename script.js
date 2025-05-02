@@ -223,12 +223,12 @@ function nextSlide() {
     const carouselInner = document.querySelector('.carousel-inner');
     const slides = carouselInner.children.length;
     currentSlide = (currentSlide + 1) % slides;
-    carouselInner.style.transform = translateX('-${currentSlide * 100}%');
+    carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
 }
 
 function prevSlide() {
     const carouselInner = document.querySelector('.carousel-inner');
     const slides = carouselInner.children.length;
     currentSlide = (currentSlide - 1 + slides) % slides;
-    carouselInner.style.transform = translateX('-${currentSlide * 100}%');
+    carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
 }
