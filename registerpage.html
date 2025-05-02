@@ -16,13 +16,15 @@
     <div id="register" class="container">
         <div class="form-container">
         <h1>Register</h1>
-        <form id="register-form" onsubmit="return validateAndSaveRegisterForm()">
-            <input type="text" id="register-firstname" placeholder="First Name" required>
-            <input type="text" id="register-lastname" placeholder="Last Name" required>
-            <input type="text" id="register-username" placeholder="Username" required>
-            <input type="password" id="register-password" placeholder="Password (min 8 characters)" required>
-            <button type="submit">Register</button>
+        <form action="registerform.php" method="post">
+            <input type="text" id="register-firstname" placeholder="First Name" name="firstName" required>
+            <input type="text" id="register-lastname" placeholder="Last Name" name="lastName" required>
+            <input type="text" id="register-username" placeholder="Username" name="username" required>
+            <input type="password" id="register-password" placeholder="Password (min 8 characters)" name="password" required>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" name="confirmPassword" required>
+            <input type="submit" class="btn btn-primary">
             <p id="register-error" class="error"></p>
+            <a href="loginpage.html" onclick="showSection('login')">Login</a>
         </form>
         </div>
         </div>
