@@ -55,7 +55,6 @@
       font-weight: bold;
     }
 
-    /* Modal styles */
     .modal {
       display: none;
       position: fixed;
@@ -106,7 +105,7 @@
       text-align: center;
     }
 
-    .book-btn, .cancel-btn {
+    .book-btn, .cancel-btn, .submit-btn {
       background-color: #007BFF;
       color: white;
       padding: 10px 20px;
@@ -135,6 +134,7 @@
       padding: 15px;
       border-radius: 8px;
       margin-top: 15px;
+      color: #000;
     }
 
     .booking-form input {
@@ -150,16 +150,21 @@
       margin-top: 8px;
       display: block;
     }
+
+    #success-message {
+      display: none;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
   <h2 class="section-title">Caravan Listings</h2>
-  <div class="caravan-section" id="caravan-list">
-    <!-- Caravan Cards will be added here -->
-  </div>
+  <div class="caravan-section" id="caravan-list"></div>
 
-  <!-- Modal -->
   <div id="caravanModal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -184,6 +189,15 @@
 
         <label for="sort">Sort Code:</label>
         <input type="text" id="sort" placeholder="Enter sort code">
+
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date">
+
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date">
+
+        <button class="submit-btn" onclick="submitForm()">Submit</button>
+        <div id="success-message">✅ Payment Successful! Thank you for booking.</div>
       </div>
     </div>
   </div>
@@ -193,42 +207,42 @@
       {
         title: "Devon Classic Caravan",
         img: "https://th.bing.com/th/id/OIP.v17sBrkEcxr9ekS822bHJwHaFb?rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Devon\n💷 Price: £45/night\n🛏 Sleeps: 4 members\n✨ Speciality: Pet-friendly and eco-built. This charming caravan offers an authentic countryside escape with rustic interiors and natural surroundings. With its sustainable design and close proximity to nature trails, it’s ideal for families or couples who want a relaxing, eco-conscious holiday."
+        desc: "🌍 Location: Devon\n💷 Price: £45/night\n🛏 Sleeps: 4 members\n✨ Pet-friendly and eco-built. This countryside retreat is perfect for those who love rustic charm and sustainability."
       },
       {
         title: "Beachside Mobile Home",
         img: "https://th.bing.com/th/id/OIP.RsWPiGfztuRGLKXqbM1vngHaE8?w=1024&h=683&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Brighton\n💷 Price: £55/night\n🛏 Sleeps: 3 members\n✨ Speciality: Walking distance to beach. With a coastal charm, this compact home provides cozy lodging for small families. Enjoy beachside sunsets, local seafood, and fun-filled boardwalks just a few steps away."
+        desc: "🌍 Location: Brighton\n💷 Price: £55/night\n🛏 Sleeps: 3 members\n✨ Walk to the beach from this cozy seaside mobile home. Equipped with modern conveniences and stylish interiors."
       },
       {
         title: "Seaside Caravan",
         img: "https://th.bing.com/th/id/OIP.fn5EBDLBwpzHBPe30BoRtQHaE8?rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Cornwall\n💷 Price: £60/night\n🛏 Sleeps: 5 members\n✨ Speciality: Seaside view, family-friendly. This caravan is designed for relaxation and fun with sea-facing windows, a mini kitchen, and outdoor sitting area. Explore nearby cliffs, enjoy water sports, or unwind under the stars."
+        desc: "🌍 Location: Cornwall\n💷 Price: £60/night\n🛏 Sleeps: 5 members\n✨ Enjoy stunning sea views from this well-furnished seaside caravan."
       },
       {
         title: "Mountain View Caravan",
         img: "https://th.bing.com/th/id/OIP.t-hYWvT6PZnAuVqwj-irKgHaE6?w=1700&h=1129&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Snowdonia\n💷 Price: £70/night\n🛏 Sleeps: 4 members\n✨ Speciality: Amazing mountain views. Nestled among the hills, it’s perfect for hikers and nature lovers. This elevated retreat provides direct access to trails and serene landscapes right outside your door."
+        desc: "🌍 Location: Snowdonia\n💷 Price: £70/night\n🛏 Sleeps: 4 members\n✨ Surrounded by peaks and nature, this mountain caravan offers peace and hiking access."
       },
       {
         title: "Luxury Swift Elegance",
         img: "https://www.practicalcaravan.com/wp-content/uploads/2018/08/7901075-scaled.jpg",
-        desc: "🌍 Location: Yorkshire\n💷 Price: £110/night\n🛏 Sleeps: 6 members\n✨ Speciality: Built-in entertainment and modern kitchen. This upscale caravan redefines mobile luxury. Relax in a cozy lounge, enjoy streaming and music systems, and cook gourmet meals in a stylish kitchenette."
+        desc: "🌍 Location: Yorkshire\n💷 Price: £110/night\n🛏 Sleeps: 6 members\n✨ This premium caravan is fitted with entertainment systems, a modern kitchen, and a lounge."
       },
       {
         title: "Deluxe Touring Caravan",
         img: "https://th.bing.com/th/id/OIP.RZa_7rohsbwm4L-sFraOGAHaE8?rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Norfolk\n💷 Price: £95/night\n🛏 Sleeps: 5 members\n✨ Speciality: Dual-bedrooms and family setup. This modern unit suits families needing privacy with its separate sleeping areas and built-in dining space."
+        desc: "🌍 Location: Norfolk\n💷 Price: £95/night\n🛏 Sleeps: 5 members\n✨ Designed for long trips, this caravan includes family-friendly features and storage."
       },
       {
         title: "Luxury Holiday Caravan",
         img: "https://th.bing.com/th/id/OIP.frI6OkHuR4IowpFpBUIQggHaEL?w=747&h=421&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Isle of Wight\n💷 Price: £120/night\n🛏 Sleeps: 6 members\n✨ Speciality: Perfect for larger families. Boasting extra space, premium furnishings, and peaceful settings near beaches and attractions."
+        desc: "🌍 Location: Isle of Wight\n💷 Price: £120/night\n🛏 Sleeps: 6 members\n✨ A luxurious home on wheels near beaches and parks with a full kitchen and plush beds."
       },
       {
         title: "Executive Caravan",
         img: "https://th.bing.com/th/id/OIP.bWyQDk8pmm-Lo_7beRCsSAHaES?w=726&h=420&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Scotland\n💷 Price: £150/night\n🛏 Sleeps: 7 members\n✨ Speciality: All-inclusive luxury experience. Enjoy a high-end stay with full amenities, spacious interiors, and privacy in stunning Scottish landscapes."
+        desc: "🌍 Location: Scotland\n💷 Price: £150/night\n🛏 Sleeps: 7 members\n✨ This top-tier caravan offers amenities, scenic views, and unbeatable comfort in nature."
       }
     ];
 
@@ -238,6 +252,7 @@
     const img = document.getElementById('modal-img');
     const desc = document.getElementById('modal-desc');
     const bookingForm = document.getElementById('booking-form');
+    const successMessage = document.getElementById('success-message');
 
     function renderCards() {
       caravans.forEach(caravan => {
@@ -257,6 +272,7 @@
       img.src = caravan.img;
       desc.innerText = caravan.desc;
       bookingForm.style.display = 'none';
+      successMessage.style.display = 'none';
       modal.style.display = 'flex';
     }
 
@@ -268,6 +284,22 @@
       if (confirm("Do you want to book this caravan?")) {
         bookingForm.style.display = 'block';
       }
+    }
+
+    function submitForm() {
+      const fullname = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const bank = document.getElementById('bank').value.trim();
+      const sort = document.getElementById('sort').value.trim();
+      const startDate = document.getElementById('start-date').value;
+      const endDate = document.getElementById('end-date').value;
+
+      if (!fullname || !email || !bank || !sort || !startDate || !endDate) {
+        alert("Please fill in all fields before submitting.");
+        return;
+      }
+
+      successMessage.style.display = 'block';
     }
 
     renderCards();
