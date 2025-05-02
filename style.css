@@ -38,7 +38,6 @@ body {
 }
 
 .container {
-    display: none;
     margin: 100px auto 20px;
     padding: 50px;
     background: darkturquoise;
