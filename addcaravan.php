@@ -1,17 +1,33 @@
+<?php
+session_start();
+
+    include("connectregister.php");
+    include("check_login.php");
+
+    $user_data = check_login($con);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Add Caravan</title>
 </head>
 <body>
     <div class="navbar">
-        <a href="homepage.html" onclick="showSection('home')">Home</a>
-        <a href="aboutus.html" onclick="showSection('about')">About</a>
-        <a href="servicespage.html" onclick="showSection('services')">Services</a>
-        <a href="loginpage.php" onclick="showSection('login')">Login</a>
+        <a href="userhomepage.php">Home</a>
+        <div class="dropdown">
+            <a class="dropbtn">List Your Caravan</a>
+            <div class="dropdown-content">
+            <a href="addcaravan.php">Add Caravan</a>
+            <a href="deletecaravan.php">Delete Caravan</a>
+            </div>
+        </div>
+        <a href="caravansummary.php">Browse Caravans</a>
+        <a href="logout.php">Logout</a>
     </div>
     <div id="add-caravan" class="container" style="display: none; background: teal;">
         <h1>Add Your Caravan</h1>

@@ -18,17 +18,20 @@ session_start();
 </head>
 <body>
     <div class="navbar">
-        <a href="homepage.html">Home</a>
-        <a href="aboutus.html">About</a>
-        <a href="servicespage.html">Services</a>
+        <a href="userhomepage.php">Home</a>
+        <div class="dropdown">
+            <a class="dropbtn">List Your Caravan</a>
+            <div class="dropdown-content">
+            <a href="addcaravan.php">Add Caravan</a>
+            <a href="deletecaravan.php">Delete Caravan</a>
+            </div>
+        </div>
+        <a href="caravansummary.php">Browse Caravans</a>
         <a href="logout.php">Logout</a>
     </div>
 
     <div id="user home" class="container active" style="background: teal;">
     <h1>Welcome back, <?php echo $user_data['username']; ?>!</h1>
-    
-    <a href="addcaravan.html" class="button">List Your Caravan<br><br></a>
-    <a href="caravansummary.html" class="button">Browse Caravans</a>
 
     <script src="script.js"></script>
 </body>
