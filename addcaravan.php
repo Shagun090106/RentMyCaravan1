@@ -6,6 +6,10 @@ session_start();
 
     $user_data = check_login($con);
 
+    if(isset($_POST['submit'])) {
+        
+    }
+
 ?>
 
 <!DOCTYPE html>
