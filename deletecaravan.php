@@ -30,162 +30,117 @@ session_start();
         <a href="logout.php">Logout</a>
     </div>
     
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Delete Caravan</title>
   <style>
+    @font-face {
+      font-family: 'Algerian';
+      src: local('Algerian'), url('https://fonts.cdnfonts.com/s/17357/ALGER.TTF') format('truetype');
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-image: url('https://i.pinimg.com/originals/f1/50/5a/f1505ae4a7799f709fa70537c30b4e80.jpg');
+      background: url('https://i.pinimg.com/originals/41/d2/c4/41d2c45ce5dcf923b17e3b9ae6a96cdb.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-position: center;
-      color: #333;
-    }
-
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 1100px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      color: white;
+      overflow-y: scroll;
     }
 
     h1 {
       text-align: center;
-      color: #222;
-      margin-bottom: 30px;
-      font-size: 2.2rem;
-    }
-
-    .caravan-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 20px;
+      margin: 40px 20px;
+      font-size: 48px;
+      font-family: 'Algerian', serif;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
     }
 
     .caravan-card {
-      flex: 1 1 calc(32% - 20px);
-      background: #ffe6f0;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 30px 20px;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      transition: transform 0.3s;
-    }
-
-    .caravan-card:hover {
-      transform: scale(1.03);
+      gap: 20px;
     }
 
     .caravan-card img {
-      width: 100%;
-      height: 160px;
+      width: 160px;
+      height: 110px;
       object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    .caravan-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-      text-align: center;
+    .caravan-info h3, .caravan-info p {
+      margin: 4px 0;
+      color: white;
+      text-shadow: 1px 1px 3px black;
     }
 
     .delete-btn {
-      background-color: #ff4d4d;
+      padding: 10px 18px;
+      background-color: #c0392b;
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-weight: bold;
+      margin-left: auto;
     }
 
     .delete-btn:hover {
-      background-color: #cc0000;
+      background-color: #e74c3c;
     }
 
-    @media (max-width: 768px) {
+    @media screen and (max-width: 700px) {
       .caravan-card {
-        flex: 1 1 100%;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .delete-btn {
+        margin: 15px 0 0;
       }
     }
   </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const currentUser = localStorage.getItem("loggedInUser");
+      const caravanList = JSON.parse(localStorage.getItem("caravanList")) || [];
+      const container = document.getElementById("caravanContainer");
+
+      const userCaravans = caravanList.filter(caravan => caravan.user === currentUser);
+
+      if (userCaravans.length === 0) {
+        container.innerHTML = "<p style='text-align:center; color:white; text-shadow: 1px 1px 2px black;'>No caravans found for your account.</p>";
+      } else {
+        userCaravans.forEach((caravan, index) => {
+          const card = document.createElement("div");
+          card.className = "caravan-card";
+          card.innerHTML = `
+            <img src="${caravan.image}" alt="Caravan Image">
+            <div class="caravan-info">
+              <h3>${caravan.name}</h3>
+              <p>Location: ${caravan.location}</p>
+              <p>Price: ${caravan.price}</p>
+            </div>
+            <button class="delete-btn">Delete</button>
+          `;
+          card.querySelector(".delete-btn").addEventListener("click", () => {
+            const confirmDelete = confirm("Are you sure you want to delete this caravan?");
+            if (confirmDelete) {
+              const updatedList = caravanList.filter((_, i) => !(caravanList[i].user === currentUser && i === index));
+              localStorage.setItem("caravanList", JSON.stringify(updatedList));
+              window.location.reload();
+            }
+          });
+          container.appendChild(card);
+        });
+      }
+    });
+  </script>
 </head>
 <body>
-  <div class="container">
-    <h1>Delete Caravan</h1>
-    <div class="caravan-grid" id="caravanGrid">
-      <!-- Caravan cards will be inserted here -->
-    </div>
-  </div>
-
-  <script>
-    const caravans = [
-      {
-        name: "Swift Escape 674",
-        image: "https://th.bing.com/th/id/OIP.bWyQDk8pmm-Lo_7beRCsSAHaES?w=726&h=420&rs=1&pid=ImgDetMain"
-      },
-      {
-        name: "Bailey Phoenix 640",
-        image: "https://th.bing.com/th/id/OIP.frI6OkHuR4IowpFpBUIQggHaEL?w=747&h=421&rs=1&pid=ImgDetMain"
-      },
-      {
-        name: "Coachman VIP 575",
-        image: "https://th.bing.com/th/id/OIP.fn5EBDLBwpzHBPe30BoRtQHaE8?rs=1&pid=ImgDetMain"
-      },
-      {
-        name: "Elddis Avante 868",
-        image: "https://th.bing.com/th/id/OIP.t-hYWvT6PZnAuVqwj-irKgHaE6?w=1700&h=1129&rs=1&pid=ImgDetMain"
-      },
-      {
-        name: "Lunar Clubman SB",
-        image: "https://th.bing.com/th/id/OIP.v17sBrkEcxr9ekS822bHJwHaFb?rs=1&pid=ImgDetMain"
-      },
-      {
-        name: "Adria Altea Dart",
-        image: "https://th.bing.com/th/id/OIP.RsWPiGfztuRGLKXqbM1vngHaE8?w=1024&h=683&rs=1&pid=ImgDetMain"
-      },
-      {
-        name: "Bailey Unicorn 3 Vigo",
-        image: "https://www.practicalcaravan.com/wp-content/uploads/2018/08/7901075-scaled.jpg"
-      },
-      {
-        name: "Knaus Sport 500 KD",
-        image: "https://th.bing.com/th/id/OIP.bWyQDk8pmm-Lo_7beRCsSAHaES?w=726&h=420&rs=1&pid=ImgDetMain"
-      }
-    ];
-
-    const grid = document.getElementById("caravanGrid");
-
-    caravans.forEach((caravan, index) => {
-      const card = document.createElement("div");
-      card.className = "caravan-card";
-
-      card.innerHTML = `
-        <img src="${caravan.image}" alt="${caravan.name}">
-        <h3>${caravan.name}</h3>
-        <button class="delete-btn" onclick="deleteCaravan(${index})">Delete</button>
-      `;
-
-      grid.appendChild(card);
-    });
-
-    function deleteCaravan(index) {
-      const confirmDelete = confirm("Are you sure you want to delete this caravan?");
-      if (confirmDelete) {
-        document.querySelectorAll(".caravan-card")[index].remove();
-      }
-    }
-  </script>
-  <script src="script.js"></script>
+  <h1>Delete Caravan</h1>
+  <div id="caravanContainer"></div>
 </body>
 </html>
