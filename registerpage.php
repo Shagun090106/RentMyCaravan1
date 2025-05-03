@@ -1,6 +1,8 @@
 <?php
 session_start();
     include("connectregister.php");
+    include("check_login.php");
+
 
     if($_SERVER['REQUEST_METHOD'] == "POST")
     {
@@ -14,11 +16,12 @@ session_start();
         if(!empty($lastName) && !empty($username) && !empty($password) && $password === $confirmPassword && !is_numeric($username))
         {
             //save to database
-            $query = "insert into register_form (firstName, lastName, username, password, confirmPassword) values ('$firstName', '$lastName', '$username', '$password', '$confirmPassword')";
+            $user_id = random_number(20);
+            $query = "insert into register_form (user_id, firstName, lastName, username, password, confirmPassword) values ('$user_id', '$firstName', '$lastName', '$username', '$password', '$confirmPassword')";
 
             mysqli_query($con, $query);
 
-            header("Location: loginpage.html");
+            header("Location: loginpage.php");
             die;
         }else
         {
