@@ -28,6 +28,7 @@ session_start();
                         header("Location: userhomepage.php");
                         die;
                     }
+                    echo "Logged in ID: " . $user_data['user_id'];
                 } 
             }
             
