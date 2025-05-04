@@ -51,7 +51,7 @@ session_start();
         <a href="homepage.html" onclick="showSection('home')">Home</a>
         <a href="aboutus.html" onclick="showSection('about')">About</a>
         <a href="servicespage.html" onclick="showSection('services')">Services</a>
-        <a href="loginpage.html" onclick="showSection('login')">Login</a>
+        <a href="loginpage.php" onclick="showSection('login')">Login</a>
     </div>
     <div id="login" class="container">
         <div class="form-container">

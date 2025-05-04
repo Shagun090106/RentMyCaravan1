@@ -14,7 +14,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>User Home Page</title>
+    <title>Caravan Summary</title>
 </head>
 <body>
     <div class="navbar">
@@ -26,12 +26,10 @@ session_start();
             <a href="deletecaravan.php">Delete Caravan</a>
             </div>
         </div>
-        <a href="caravansummary.php">Browse Caravans</a>
+        <a href="caravansummary.php">Caravan Summary</a>
         <a href="logout.php">Logout</a>
     </div>
 
-  <meta charset="UTF-8">
-  <title>Caravan Summary</title>
   <style>
     body {
       margin: 0;

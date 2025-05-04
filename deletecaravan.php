@@ -26,7 +26,7 @@ session_start();
             <a href="deletecaravan.php">Delete Caravan</a>
             </div>
         </div>
-        <a href="caravansummary.php">Browse Caravans</a>
+        <a href="caravansummary.php">Caravan Summary</a>
         <a href="logout.php">Logout</a>
     </div>
     

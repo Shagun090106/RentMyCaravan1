@@ -43,7 +43,7 @@ session_start();
         <a href="homepage.html" onclick="showSection('home')">Home</a>
         <a href="aboutus.html" onclick="showSection('about')">About</a>
         <a href="servicespage.html" onclick="showSection('services')">Services</a>
-        <a href="loginpage.html" onclick="showSection('login')">Login</a>
+        <a href="loginpage.php" onclick="showSection('login')">Login</a>
     </div>
     <div id="register" class="container">
         <div class="form-container">
@@ -56,7 +56,7 @@ session_start();
             <input type="password" id="confirm-password" placeholder="Confirm Password" name="confirmPassword" required>
             <input id="button" type="submit" value="Signup"><br><br>
             <p id="register-error" class="error"></p>
-            <a href="loginpage.html" onclick="showSection('login')">Back to Login</a>
+            <a href="loginpage.php" onclick="showSection('login')">Back to Login</a>
         </form>
         </div>
         </div>
