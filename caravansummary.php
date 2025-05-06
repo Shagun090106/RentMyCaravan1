@@ -1,35 +1,8 @@
-<?php
-session_start();
-
-    include("connectregister.php");
-    include("check_login.php");
-
-    $user_data = check_login($con);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Caravan Summary</title>
-</head>
-<body>
-    <div class="navbar">
-        <a href="userhomepage.php">Home</a>
-        <div class="dropdown">
-            <a class="dropbtn">List Your Caravan</a>
-            <div class="dropdown-content">
-            <a href="addcaravan.php">Add Caravan</a>
-            <a href="deletecaravan.php">Delete Caravan</a>
-            </div>
-        </div>
-        <a href="caravansummary.php">Caravan Summary</a>
-        <a href="logout.php">Logout</a>
-    </div>
-
+  <meta charset="UTF-8">
+  <title>Caravan Summary</title>
   <style>
     body {
       margin: 0;
@@ -45,7 +18,8 @@ session_start();
       font-size: 2rem;
       text-align: center;
       margin-top: 20px;
-      text-shadow: 2px 2px 4px #000;
+      color: white;
+      text-shadow: 2px 2px 4px #000000;
     }
 
     .caravan-section {
@@ -80,8 +54,11 @@ session_start();
       padding: 15px;
       color: #333;
       font-weight: bold;
+      text-align: center;
+      font-size: 1.2rem;
     }
 
+    /* Modal styles */
     .modal {
       display: none;
       position: fixed;
@@ -94,32 +71,72 @@ session_start();
     }
 
     .modal-content {
-      background: linear-gradient(to right, #ffe6f0, #e0f7fa);
+      background: linear-gradient(135deg, #ff7e5f, #feb47b);
       padding: 25px;
-      border-radius: 10px;
-      width: 70%;
+      border-radius: 15px;
+      width: 60%;
       max-width: 600px;
-      color: #000;
+      color: #fff;
       text-align: left;
-      box-shadow: 0 0 10px #000;
-      max-height: 90%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      max-height: 80%;
       overflow-y: auto;
-      position: relative;
+      font-family: 'Arial', sans-serif;
     }
 
     .modal-content img {
       width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
+      height: auto;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .modal-content h3 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .modal-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .modal-content .price {
+      font-size: 1.5rem;
+      color: #f1c40f;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .modal-content .cancel-btn {
+      background-color: #f1c40f;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      margin: 10px 0;
+      font-size: 16px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content .cancel-btn:hover {
+      background-color: #e67e22;
     }
 
     .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 22px;
+      font-size: 28px;
       font-weight: bold;
-      color: #333;
+      color: #aaa;
       cursor: pointer;
     }
 
@@ -127,105 +144,23 @@ session_start();
       color: red;
     }
 
-    .modal-buttons {
-      margin-top: 15px;
-      text-align: center;
-    }
-
-    .book-btn, .cancel-btn, .submit-btn {
-      background-color: #007BFF;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px;
-      font-size: 16px;
-      border: none;
-    }
-
-    .cancel-btn {
-      background-color: #dc3545;
-    }
-
-    .book-btn:hover {
-      background-color: #0056b3;
-    }
-
-    .cancel-btn:hover {
-      background-color: #c82333;
-    }
-
-    .booking-form {
-      display: none;
-      background-color: #f9f9f9;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 15px;
-      color: #000;
-    }
-
-    .booking-form input {
-      width: 100%;
-      padding: 8px;
-      margin: 6px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    .booking-form label {
-      font-weight: bold;
-      margin-top: 8px;
-      display: block;
-    }
-
-    #success-message {
-      display: none;
-      color: green;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 10px;
-    }
   </style>
 </head>
 <body>
 
-  <h2 class="section-title">Caravan Listings</h2>
-  <div class="caravan-section" id="caravan-list"></div>
+  <div class="caravan-section" id="caravan-section">
+    <!-- Caravan Cards will be injected here -->
+  </div>
 
+  <!-- Modal for Caravan Details -->
   <div id="caravanModal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal()">&times;</span>
+      <button class="cancel-btn" onclick="closeModal()">Close</button>
       <h3 id="modal-title"></h3>
       <img id="modal-img" src="" alt="">
       <p id="modal-desc"></p>
-
-      <div class="modal-buttons">
-        <button class="book-btn" onclick="confirmBooking()">Book Now</button>
-        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
-      </div>
-
-      <div id="booking-form" class="booking-form">
-        <label for="fullname">Full Name:</label>
-        <input type="text" id="fullname" placeholder="Enter your full name">
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Enter your email">
-
-        <label for="bank">Bank Account Number:</label>
-        <input type="text" id="bank" placeholder="Enter your bank account number">
-
-        <label for="sort">Sort Code:</label>
-        <input type="text" id="sort" placeholder="Enter sort code">
-
-        <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date">
-
-        <label for="end-date">End Date:</label>
-        <input type="date" id="end-date">
-
-        <button class="submit-btn" onclick="submitForm()">Submit</button>
-        <div id="success-message">✅ Payment Successful! Thank you for booking.</div>
-      </div>
+      <p id="modal-price" class="price"></p>
     </div>
   </div>
 
@@ -234,103 +169,77 @@ session_start();
       {
         title: "Devon Classic Caravan",
         img: "https://th.bing.com/th/id/OIP.v17sBrkEcxr9ekS822bHJwHaFb?rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Devon\n💷 Price: £45/night\n🛏 Sleeps: 4 members\n✨ Pet-friendly and eco-built. This countryside retreat is perfect for those who love rustic charm and sustainability."
+        desc: "Location: 🌍 Devon\nPrice: 💷 £45/night\nSleeps: 🛏️ 4 members\nSpeciality: Pet-friendly and eco-built.\n\nThis traditional Devon Classic Caravan is ideal for those seeking a cozy getaway. With comfortable sleeping arrangements for up to 4 members, it offers a homely experience for families or small groups. Located in the picturesque Devon countryside, it boasts beautiful natural surroundings and is close to popular outdoor attractions. The caravan is pet-friendly, making it a great option for animal lovers who wish to bring their furry friends along. Eco-conscious travelers will also appreciate the sustainable design of this caravan.",
+        price: "£45/night"
       },
       {
         title: "Beachside Mobile Home",
         img: "https://th.bing.com/th/id/OIP.RsWPiGfztuRGLKXqbM1vngHaE8?w=1024&h=683&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Brighton\n💷 Price: £55/night\n🛏 Sleeps: 3 members\n✨ Walk to the beach from this cozy seaside mobile home. Equipped with modern conveniences and stylish interiors."
+        desc: "Location: 🌍 Brighton\nPrice: 💷 £55/night\nSleeps: 🛏️ 3 members\nSpeciality: Walking distance to beach.\n\nExperience the charm of coastal living with the Beachside Mobile Home. Perfectly situated in the vibrant Brighton area, this caravan is just a short stroll away from the beach. It provides accommodation for up to 3 people, making it perfect for a small group or couple looking for a peaceful retreat by the sea. The modern interiors, coupled with the convenience of being near Brighton's lively attractions, make this mobile home a wonderful vacation choice. Spend your days on the beach and your nights in comfort.",
+        price: "£55/night"
       },
       {
         title: "Seaside Caravan",
-        img: "https://th.bing.com/th/id/OIP.fn5EBDLBwpzHBPe30BoRtQHaE8?rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Cornwall\n💷 Price: £60/night\n🛏 Sleeps: 5 members\n✨ Enjoy stunning sea views from this well-furnished seaside caravan."
+        img: "https://th.bing.com/th/id/OIP.v17sBrkEcxr9ekS822bHJwHaFb?rs=1&pid=ImgDetMain",
+        desc: "Location: 🌍 Cornwall\nPrice: 💷 £60/night\nSleeps: 🛏️ 5 members\nSpeciality: Seaside view, family-friendly.\n\nSituated in the stunning coastal region of Cornwall, the Seaside Caravan is a great option for families looking to enjoy the beach. Accommodating up to 5 people, this caravan offers ample space for a family or small group. With its prime location near the sea, you can enjoy picturesque views right from the comfort of the caravan. The surrounding area offers a wide variety of outdoor activities, including hiking, fishing, and surfing. The Seaside Caravan is ideal for a family vacation filled with fun and relaxation.",
+        price: "£60/night"
       },
       {
         title: "Mountain View Caravan",
         img: "https://th.bing.com/th/id/OIP.t-hYWvT6PZnAuVqwj-irKgHaE6?w=1700&h=1129&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Snowdonia\n💷 Price: £70/night\n🛏 Sleeps: 4 members\n✨ Surrounded by peaks and nature, this mountain caravan offers peace and hiking access."
+        desc: "Location: 🌍 Snowdonia\nPrice: 💷 £70/night\nSleeps: 🛏️ 4 members\nSpeciality: Amazing mountain views.\n\nFor those who love nature and adventure, the Mountain View Caravan in Snowdonia is a perfect escape. This spacious caravan accommodates up to 4 people and offers breathtaking views of the surrounding mountains. Whether you're into hiking, mountain biking, or simply soaking in the scenery, this location provides it all. The caravan itself is well-equipped with all the comforts of home, making it a relaxing base after a day of exploring the Welsh mountains. Perfect for outdoor enthusiasts and nature lovers.",
+        price: "£70/night"
       },
       {
         title: "Luxury Swift Elegance",
         img: "https://www.practicalcaravan.com/wp-content/uploads/2018/08/7901075-scaled.jpg",
-        desc: "🌍 Location: Yorkshire\n💷 Price: £110/night\n🛏 Sleeps: 6 members\n✨ This premium caravan is fitted with entertainment systems, a modern kitchen, and a lounge."
+        desc: "Location: 🌍 Yorkshire\nPrice: 💷 £110/night\nSleeps: 🛏️ 6 members\nSpeciality: Built-in entertainment and modern kitchen.\n\nThe Luxury Swift Elegance offers the ultimate in comfort and style. Perfect for larger families, it can sleep up to 6 people comfortably. Located in beautiful Yorkshire, this caravan features a state-of-the-art kitchen, a spacious living area, and high-end entertainment options. Whether you're enjoying a family movie night or cooking a gourmet meal, this caravan has it all. Its modern design and sleek interiors make it a perfect choice for those seeking a luxurious and convenient getaway in the countryside.",
+        price: "£110/night"
       },
       {
         title: "Deluxe Touring Caravan",
         img: "https://th.bing.com/th/id/OIP.RZa_7rohsbwm4L-sFraOGAHaE8?rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Norfolk\n💷 Price: £95/night\n🛏 Sleeps: 5 members\n✨ Designed for long trips, this caravan includes family-friendly features and storage."
+        desc: "Location: 🌍 Norfolk\nPrice: 💷 £95/night\nSleeps: 🛏️ 5 members\nSpeciality: Dual-bedrooms and family setup.\n\nThe Deluxe Touring Caravan offers a spacious and comfortable environment, making it perfect for families or groups. With dual-bedrooms, this caravan accommodates up to 5 people, providing ample room for relaxation and privacy. Located in Norfolk, it offers easy access to both the beach and countryside, making it ideal for those who want to experience both coastal and rural beauty. Equipped with all modern amenities, including a fully-equipped kitchen, this caravan ensures that your stay is both comfortable and convenient.",
+        price: "£95/night"
       },
       {
         title: "Luxury Holiday Caravan",
-        img: "https://th.bing.com/th/id/OIP.frI6OkHuR4IowpFpBUIQggHaEL?w=747&h=421&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Isle of Wight\n💷 Price: £120/night\n🛏 Sleeps: 6 members\n✨ A luxurious home on wheels near beaches and parks with a full kitchen and plush beds."
+        img: "https://th.bing.com/th/id/OIP.RsWPiGfztuRGLKXqbM1vngHaE8?w=1024&h=683&rs=1&pid=ImgDetMain",
+        desc: "Location: 🌍 Isle of Wight\nPrice: 💷 £120/night\nSleeps: 🛏️ 6 members\nSpeciality: Perfect for larger families.\n\nThe Luxury Holiday Caravan on the Isle of Wight offers a premium experience for families looking for a peaceful getaway. With space for up to 6 people, this caravan is ideal for large families or groups. Its proximity to the beach and local attractions makes it the perfect base for exploring the island. Enjoy the comforts of home with modern furnishings, a fully-equipped kitchen, and spacious living areas. The caravan also offers fantastic views of the coastline and is a perfect choice for a relaxed family vacation.",
+        price: "£120/night"
       },
       {
         title: "Executive Caravan",
-        img: "https://th.bing.com/th/id/OIP.bWyQDk8pmm-Lo_7beRCsSAHaES?w=726&h=420&rs=1&pid=ImgDetMain",
-        desc: "🌍 Location: Scotland\n💷 Price: £150/night\n🛏 Sleeps: 7 members\n✨ This top-tier caravan offers amenities, scenic views, and unbeatable comfort in nature."
+        img: "https://th.bing.com/th/id/OIP.RZa_7rohsbwm4L-sFraOGAHaE8?rs=1&pid=ImgDetMain",
+        desc: "Location: 🌍 Scotland\nPrice: 💷 £130/night\nSleeps: 🛏️ 7 members\nSpeciality: Premium features and comfort.\n\nThe Executive Caravan is an ultra-modern and luxurious accommodation designed for large families or groups. It offers plenty of space with sleeping arrangements for up to 7 people, making it an excellent choice for larger parties. This caravan is fully equipped with high-end appliances, comfortable seating, and top-notch entertainment options. Located in the beautiful Scottish Highlands, you'll be surrounded by breathtaking natural scenery, providing an unforgettable vacation experience.",
+        price: "£130/night"
       }
     ];
 
-    const container = document.getElementById('caravan-list');
-    const modal = document.getElementById('caravanModal');
-    const title = document.getElementById('modal-title');
-    const img = document.getElementById('modal-img');
-    const desc = document.getElementById('modal-desc');
-    const bookingForm = document.getElementById('booking-form');
-    const successMessage = document.getElementById('success-message');
+    const section = document.getElementById('caravan-section');
 
-    function renderCards() {
-      caravans.forEach(caravan => {
-        const card = document.createElement('div');
-        card.className = 'caravan-card';
-        card.innerHTML = `
-          <img src="${caravan.img}" alt="${caravan.title}">
-          <div class="caption">${caravan.title}</div>
-        `;
-        card.onclick = () => showModal(caravan);
-        container.appendChild(card);
-      });
-    }
+    caravans.forEach(caravan => {
+      const card = document.createElement('div');
+      card.classList.add('caravan-card');
+      card.innerHTML = `
+        <img src="${caravan.img}" alt="Caravan Image">
+        <div class="caption">${caravan.title}</div>
+      `;
+      card.addEventListener('click', () => openModal(caravan));
+      section.appendChild(card);
+    });
 
-    function showModal(caravan) {
-      title.innerText = caravan.title;
-      img.src = caravan.img;
-      desc.innerText = caravan.desc;
-      bookingForm.style.display = 'none';
-      successMessage.style.display = 'none';
-      modal.style.display = 'flex';
+    function openModal(caravan) {
+      document.getElementById('modal-title').innerText = caravan.title;
+      document.getElementById('modal-img').src = caravan.img;
+      document.getElementById('modal-desc').innerText = caravan.desc;
+      document.getElementById('modal-price').innerText = caravan.price;
+      document.getElementById('caravanModal').style.display = 'flex';
     }
 
     function closeModal() {
-      modal.style.display = 'none';
+      document.getElementById('caravanModal').style.display = 'none';
     }
-
-    function confirmBooking() {
-      if (confirm("Do you want to book this caravan?")) {
-        bookingForm.style.display = 'block';
-      }
-    }
-
-    function submitForm() {
-      const fullname = document.getElementById('fullname').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const bank = document.getElementById('bank').value.trim();
-      const sort = document.getElementById('sort').value.trim();
-      const startDate = document.getElementById('start-date').value;
-      const endDate = document.getElementById('end-date').value;
-
-      if (!fullname || !email || !bank || !sort || !startDate || !endDate) {
-        alert("Please fill in all fields before submitting.");
-        return;
-      }
-
-      successMessage.style.display = 'block';
-    }
-
-    renderCards();
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
